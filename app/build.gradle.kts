@@ -115,7 +115,6 @@ dependencies {
 
 
 
-
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -125,4 +124,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-}
+    // Material Desing
+    implementation("com.google.android.material:material:1.12.0")
+    }

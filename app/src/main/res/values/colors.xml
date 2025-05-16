@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Colores principales de Material Design -->
+    <color name="colorPrimary">#6200EE</color>        <!-- Color principal de tu marca -->
+    <color name="colorPrimaryVariant">#3700B3</color>    <!-- Variante oscura del color principal -->
+    <color name="colorOnPrimary">#FFFFFF</color>      <!-- Color para texto/iconografía sobre el color principal -->
+
+    <color name="colorSecondary">#03DAC6</color>     <!-- Color secundario (acentuación) -->
+    <color name="colorSecondaryVariant">#018786</color> <!-- Variante oscura del color secundario -->
+    <color name="colorOnSecondary">#000000</color>    <!-- Color para texto/iconografía sobre el color secundario -->
+
+    <color name="colorSurface">#FFFFFF</color>        <!-- Color de las superficies de componentes (cards, sheets, etc.) -->
+    <color name="colorOnSurface">#000000</color>      <!-- Color para texto/iconografía sobre la superficie -->
+
+    <color name="colorError">#B00020</color>          <!-- Color para indicar errores -->
+    <color name="colorOnError">#FFFFFF</color>        <!-- Color para texto/iconografía sobre el color de error -->
+
+    <!-- Colores de fondo -->
+    <color name="android_background">#F3EDF7</color>  <!-- Color de fondo general de la pantalla -->
+    <color name="colorOnBackground">#1D1B20</color>   <!-- Color para texto/iconografía sobre el fondo -->
+
+    <!-- Otros colores útiles -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
 </resources>
