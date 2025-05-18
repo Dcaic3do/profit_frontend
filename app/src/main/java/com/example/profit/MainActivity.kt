@@ -11,8 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.profit.Screen.CategoriaScreen
+import com.example.profit.Screen.IngredienteScreen
 import com.example.profit.Screen.ObjetivoScreen
+import com.example.profit.ui.navigation.AppNavigation
+import com.example.profit.ui.navigation.Screens
 import com.example.profit.ui.theme.ProFitTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CategoriaScreen()
+            val navController = rememberNavController()
+            AppNavigation(navController)
         }
     }
 }

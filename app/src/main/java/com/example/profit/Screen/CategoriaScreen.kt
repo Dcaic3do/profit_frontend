@@ -36,15 +36,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.profit.Model.Categoria
 import com.example.profit.Model.Objetivo
 import com.example.profit.ViewModel.CategoriaViewModel
 import com.example.profit.ViewModel.ObjetivoViewModel
+import com.example.profit.ui.navigation.Screens
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
 @Composable
-fun CategoriaScreen(viewModel: CategoriaViewModel = viewModel()) {
+fun CategoriaScreen(navController: NavHostController, viewModel: CategoriaViewModel = viewModel()) {
     val categorias by viewModel.categorias.observeAsState(emptyList())
     var categoria by remember { mutableStateOf("") }
     var codigoBusqueda by remember { mutableStateOf("") }
@@ -65,6 +66,10 @@ fun CategoriaScreen(viewModel: CategoriaViewModel = viewModel()) {
     } ?: emptyList()
 
     Column(modifier = Modifier.padding(top = 60.dp)) {
+        Button(onClick = { navController.navigate(Screens.MenuPrincipal.route) }) {
+            Text("Volver al menú principal")
+        }
+
         Text(text = "Lista de Categorias", style = MaterialTheme.typography.headlineSmall)
         // Campo para buscar por código
         TextField(

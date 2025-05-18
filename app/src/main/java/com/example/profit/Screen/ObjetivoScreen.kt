@@ -40,10 +40,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.navigation.NavHostController
+import com.example.profit.ui.navigation.Screens
 
-@Preview(showBackground = true)
 @Composable
-fun ObjetivoScreen(viewModel: ObjetivoViewModel = viewModel()) {
+fun ObjetivoScreen(navController: NavHostController, viewModel: ObjetivoViewModel = viewModel()) {
     val objetivos by viewModel.objetivos.observeAsState(emptyList())
     var objetivo by remember { mutableStateOf("") }
     var codigoBusqueda by remember { mutableStateOf("") }
@@ -64,6 +65,10 @@ fun ObjetivoScreen(viewModel: ObjetivoViewModel = viewModel()) {
     } ?: emptyList()
 
     Column(modifier = Modifier.padding(top = 60.dp)) {
+        Button(onClick = { navController.navigate(Screens.MenuPrincipal.route) }) {
+            Text("Volver al menú principal")
+        }
+
         Text(text = "Lista de Objetivos", style = MaterialTheme.typography.headlineSmall)
         // Campo para buscar por código
         TextField(

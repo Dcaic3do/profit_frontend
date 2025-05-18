@@ -36,15 +36,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.profit.Model.Categoria
 import com.example.profit.Model.Ingrediente
 import com.example.profit.ViewModel.CategoriaViewModel
 import com.example.profit.ViewModel.IngredienteViewModel
+import com.example.profit.ui.navigation.Screens
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
 @Composable
-fun IngredienteScreen(viewModel: IngredienteViewModel = viewModel()) {
+fun IngredienteScreen(navController: NavHostController, viewModel: IngredienteViewModel = viewModel()) {
     val ingredientes by viewModel.ingredientes.observeAsState(emptyList())
     var ingrediente by remember { mutableStateOf("") }
     var unidad by remember { mutableStateOf("") }
@@ -66,6 +67,10 @@ fun IngredienteScreen(viewModel: IngredienteViewModel = viewModel()) {
     } ?: emptyList()
 
     Column(modifier = Modifier.padding(top = 60.dp)) {
+        Button(onClick = { navController.navigate(Screens.MenuPrincipal.route) }) {
+            Text("Volver al menú principal")
+        }
+
         Text(text = "Lista de Ingredientes", style = MaterialTheme.typography.headlineSmall)
         // Campo para buscar por código
         TextField(
