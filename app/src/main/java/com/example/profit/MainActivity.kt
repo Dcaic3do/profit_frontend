@@ -19,7 +19,7 @@ import com.example.profit.Screen.IngredienteScreen
 import com.example.profit.Screen.ObjetivoScreen
 import com.example.profit.ui.navigation.AppNavigation
 import com.example.profit.ui.navigation.Screens
-import com.example.profit.ui.theme.ProFitTheme
+import com.example.profit.ui.theme.ProfitTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +27,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            AppNavigation(navController)
+            ProfitTheme {
+                AppNavigation(navController)
+            }
         }
     }
 }
