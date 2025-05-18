@@ -1,6 +1,8 @@
 package com.example.profit.Screen
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -11,8 +13,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -25,6 +29,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -41,15 +46,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.profit.Model.Objetivo
 import com.example.profit.Model.Usuario
 import com.example.profit.ViewModel.ObjetivoViewModel
 import com.example.profit.ViewModel.UsuarioViewModel
+import com.example.profit.ui.navigation.Screens
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
 @Composable
-fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
+fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel = viewModel())  {
     val usuarios by viewModel.usuarios.observeAsState(emptyList())
     var usuario by remember { mutableStateOf("") }
     var correoElectronico by remember { mutableStateOf("") }
@@ -79,20 +85,11 @@ fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
         it.idUsuario?.toString()?.contains(codigoBusqueda, ignoreCase = true) ?: false
     } ?: emptyList()
 
-    Column(modifier = Modifier.padding(top = 60.dp)) {
-        Text(text = "Lista de Usuarios", style = MaterialTheme.typography.headlineSmall)
-        // Campo para buscar por código
-        TextField(
-            value = codigoBusqueda,
-            onValueChange = { codigoBusqueda = it },
-            label = { Text("Buscar por código") },
-            leadingIcon = {
-                Icon(Icons.Filled.Search, contentDescription = "Codigo Icon")
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-        )
+    Column(modifier = Modifier.padding(top = 8.dp)) {
+
+        Button(onClick = { navController.navigate(Screens.MenuPrincipal.route)}, modifier = Modifier.padding(top = 16.dp) ) {
+            Text("Volver al menú principal")
+        }
 
         Text(
             text = "Agregar Nuevo Usuario",
@@ -170,22 +167,45 @@ fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
         }
 
         // Lista Desplegable Objetivos
-        Text(text = "Selecciona un Objetivo", modifier = Modifier.padding(top = 8.dp))
-
-        Button(onClick = { expanded = true }) {
-            Text(text = objetivoSeleccionado?.objetivo ?: "Seleccionar objetivo")
-        }
+        TextField(
+            value = objetivoSeleccionado?.objetivo ?: "",
+            onValueChange = {},
+            readOnly = true,
+            label = { Text("Seleccionar objetivo") },
+            leadingIcon = {
+                Icon(Icons.Filled.Star, contentDescription = "Nombre Icon")
+            },
+            trailingIcon = {
+                Icon(
+                    Icons.Filled.ArrowDropDown,
+                    contentDescription = "Expandir menú",
+                    modifier = Modifier.clickable { expanded = true }
+                )
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
+            isError = contrasena.isBlank() // Validación de nombre obligatorio
+        )
 
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             listarObjetivos.forEach { objetivo ->
                 DropdownMenuItem(
-                    text = { Text(objetivo.objetivo) },
                     onClick = {
                         objetivoSeleccionado = objetivo
                         expanded = false
-                    }
+                    },
+                    text = {Text(objetivo.objetivo)}
                 )
             }
+        }
+        
+        if (objetivoSeleccionado == null) {
+            Text(
+                text = "Seleccionar un objetivo es obligatorio",
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
 
         // Calorias Diarias
@@ -194,7 +214,7 @@ fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
             onValueChange = { caloriaDiarias = it },
             label = { Text("Calorias Diarías") },
             leadingIcon = {
-                Icon(Icons.Filled.Star, contentDescription = "Objetivo Diario Icon")
+                Icon(Icons.Filled.Favorite, contentDescription = "Objetivo Diario Icon")
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -235,6 +255,20 @@ fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "Agregar Objetivo")
         }
+
+        Text(text = "Lista de Usuarios", style = MaterialTheme.typography.headlineSmall)
+        // Campo para buscar por código
+        TextField(
+            value = codigoBusqueda,
+            onValueChange = { codigoBusqueda = it },
+            label = { Text("Buscar por código") },
+            leadingIcon = {
+                Icon(Icons.Filled.Search, contentDescription = "Codigo Icon")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        )
 
         if (usuariosFiltrados.isEmpty()) {
             Text(text = "No hay usuarios disponibles.")
@@ -328,3 +362,5 @@ fun UsuarioScreen(viewModel: UsuarioViewModel = viewModel()) {
         )
     }
 }
+
+

@@ -9,6 +9,7 @@ data class Usuario(
     @SerializedName("correo_electronico")
     val correoElectronico: String,
     val contrasena: String,
+    @SerializedName("id_objetivo")
     val objetivo: Long,
     @SerializedName("caloria_diarias")
     val caloriaDiarias: Long
