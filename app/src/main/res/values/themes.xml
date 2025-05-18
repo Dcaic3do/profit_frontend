@@ -1,5 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Tema base de la aplicación, heredando de Material Components -->
+    <style name="Theme.ProFit" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Colores del tema (usan los colores definidos en colors.xml) -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
 
-    <style name="Theme.ProFit" parent="android:Theme.Material.Light.NoActionBar" />
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <item name="android:colorBackground">@color/android_background</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+
+        <!-- Personalizaciones adicionales del tema -->
+        <!-- Por ejemplo, puedes definir tipografías, formas, etc. -->
+        <!-- <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6</item> -->
+
+        <!-- Personalización para la barra de estado y barra de navegación -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- <item name="android:navigationBarColor">@android:color/black</item> -->
+    </style>
+
+    <!-- Opcional: Tema para el modo oscuro (si usas DayNight) -->
+    <!-- Si usas Theme.MaterialComponents.DayNight, puedes definir un tema oscuro aquí -->
+    <style name="Theme.YourAppName.Night" parent="Theme.MaterialComponents.DayNight">
+        <!-- Define los colores para el modo oscuro si difieren del modo claro -->
+        <!-- Por ejemplo:
+        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        -->
+    </style>
+
 </resources>
