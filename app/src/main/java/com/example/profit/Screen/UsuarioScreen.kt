@@ -34,6 +34,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,6 +71,7 @@ import com.example.profit.ui.components.MenuLateral
 import com.example.profit.ui.navigation.Screens
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel = viewModel()) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -225,35 +229,43 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
                     }
 
                     // Lista Desplegable Objetivos
-                    TextField(
-                        value = objetivoSeleccionado?.objetivo ?: "",
-                        onValueChange = {},
-                        readOnly = true,
-                        label = { Text("Seleccionar objetivo") },
-                        leadingIcon = {
-                            Icon(Icons.Filled.FitnessCenter, contentDescription = "Nombre Icon")
-                        },
-                        trailingIcon = {
-                            Icon(
-                                Icons.Filled.ArrowDropDown,
-                                contentDescription = "Expandir menú",
-                                modifier = Modifier.clickable { expanded = true }
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                    )
+                    var expandedObjetivo by remember { mutableStateOf(false) }
 
-                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        listarObjetivos.forEach { objetivo ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    objetivoSeleccionado = objetivo
-                                    expanded = false
-                                },
-                                text = { Text(objetivo.objetivo) }
-                            )
+                    ExposedDropdownMenuBox(
+                        expanded = expandedObjetivo,
+                        onExpandedChange = { expandedObjetivo = !expandedObjetivo },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        TextField(
+                            value = objetivoSeleccionado?.objetivo ?: "",
+                            onValueChange = {},
+                            readOnly = true,
+                            leadingIcon = {
+                                Icon(Icons.Filled.FitnessCenter, contentDescription = "Fats Icon")
+                            },
+                            label = { Text("Seleccionar objetivo") },
+                            trailingIcon = {
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedObjetivo)
+                            },
+                            modifier = Modifier
+                                .menuAnchor() // Este ancla el dropdown justo debajo del TextField
+                                .fillMaxWidth(),
+                            isError = objetivoSeleccionado == null
+                        )
+
+                        ExposedDropdownMenu(
+                            expanded = expandedObjetivo,
+                            onDismissRequest = { expandedObjetivo = false }
+                        ) {
+                            listarObjetivos.forEach { objetivo ->
+                                DropdownMenuItem(
+                                    text = { Text(objetivo.objetivo) },
+                                    onClick = {
+                                        objetivoSeleccionado = objetivo
+                                        expandedObjetivo = false
+                                    }
+                                )
+                            }
                         }
                     }
 
