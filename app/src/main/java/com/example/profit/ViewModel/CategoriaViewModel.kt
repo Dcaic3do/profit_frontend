@@ -22,7 +22,7 @@ class CategoriaViewModel : ViewModel() {
             val categoriasList = withContext(Dispatchers.IO) {
                 repository.listarCategoria()
             }
-            _categorias.postValue(categoriasList)
+            _categorias.postValue(categoriasList ?: emptyList())
         }
     }
 

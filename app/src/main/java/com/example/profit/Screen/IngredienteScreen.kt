@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.LineWeight
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -79,10 +80,12 @@ fun IngredienteScreen(
 
     // Items para el menú lateral
     val menuItems = listOf(
-        DrawerItem("Usuarios", Screens.Usuario.route, Icons.Filled.Person),
-        DrawerItem("Objetivos", Screens.Objetivo.route, Icons.Filled.FitnessCenter),
-        DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Filled.Restaurant),
-        DrawerItem("Categorías", Screens.Categoria.route, Icons.Filled.Category)
+        DrawerItem("Usuarios", Screens.Usuario.route, Icons.Default.Person),
+        DrawerItem("Objetivos", Screens.Objetivo.route, Icons.Default.FitnessCenter),
+        DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
+        DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
+        DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
+        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add)
     )
 
     LaunchedEffect(true) {

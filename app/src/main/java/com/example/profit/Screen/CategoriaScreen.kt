@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -76,7 +77,9 @@ fun CategoriaScreen(navController: NavHostController, viewModel: CategoriaViewMo
         DrawerItem("Usuarios", Screens.Usuario.route, Icons.Default.Person),
         DrawerItem("Objetivos", Screens.Objetivo.route, Icons.Default.FitnessCenter),
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
-        DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category)
+        DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
+        DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
+        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add)
     )
 
     val categoriasFiltradas = categorias?.filter {

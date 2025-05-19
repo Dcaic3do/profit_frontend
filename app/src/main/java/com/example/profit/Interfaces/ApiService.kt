@@ -3,6 +3,8 @@ package com.example.profit.Interfaces
 import com.example.profit.Model.Categoria
 import com.example.profit.Model.Ingrediente
 import com.example.profit.Model.Objetivo
+import com.example.profit.Model.Receta
+import com.example.profit.Model.RecetaIngrediente
 import com.example.profit.Model.Usuario
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -65,6 +67,32 @@ interface ObjetivoInterface {
 
     @DELETE("/usuario/eliminar/{idUsuario}")
     suspend fun eliminarUsuario(@Path("idUsuario") id: Long): Response<Void>
+
+    //Receta
+    @GET("/receta/listar")
+    suspend fun listarReceta(): List<Receta>
+
+    @GET("/receta/listar/{idReceta}")
+    suspend fun obtenerRecetaPorID(@Path("idReceta") id: Long): Receta
+
+    @POST("/receta/guardar")
+    suspend fun guardarReceta(@Body receta: Receta): Receta
+
+    @DELETE("/receta/eliminar/{idReceta}")
+    suspend fun eliminarReceta(@Path("idReceta") id: Long): Response<Void>
+
+    //Receta-Ingrediente
+    @GET("/recetaIngrediente/listar")
+    suspend fun listarRecetaIngrediente(): List<RecetaIngrediente>
+
+    @GET("/recetaIngrediente/listar/{idRecetaIngrediente}")
+    suspend fun obtenerRecetaIngredientePorID(@Path("idRecetaIngrediente") id: Long): RecetaIngrediente
+
+    @POST("/recetaIngrediente/guardar")
+    suspend fun guardarRecetaIngrediente(@Body recetaIngrediente: RecetaIngrediente): RecetaIngrediente
+
+    @DELETE("/recetaIngrediente/eliminar/{idRecetaIngrediente}")
+    suspend fun eliminarRecetaIngrediente(@Path("idRecetaIngrediente") id: Long): Response<Void>
 }
 
 object RetrofitClient {
