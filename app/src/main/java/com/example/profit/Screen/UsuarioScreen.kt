@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Restaurant
+import androidx.compose.material.icons.filled.RestaurantMenu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
@@ -100,7 +101,9 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
         DrawerItem("Usuarios", Screens.Usuario.route, Icons.Default.Person),
         DrawerItem("Objetivos", Screens.Objetivo.route, Icons.Default.FitnessCenter),
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
-        DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category)
+        DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
+        DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
+        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add)
     )
 
     val usuariosFiltrados = usuarios?.filter {
@@ -239,8 +242,7 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 8.dp),
-                        isError = contrasena.isBlank() // Validación de nombre obligatorio
+                            .padding(top = 8.dp)
                     )
 
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {

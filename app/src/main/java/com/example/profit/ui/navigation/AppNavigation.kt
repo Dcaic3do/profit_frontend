@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.profit.Screen.AgregarIngredienteScreen
 import com.example.profit.Screen.CategoriaScreen
 import com.example.profit.Screen.IngredienteScreen
 import com.example.profit.Screen.MenuPrincipalScreen
 import com.example.profit.Screen.UsuarioScreen
 import com.example.profit.Screen.ObjetivoScreen
+import com.example.profit.Screen.RecetaScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -27,6 +29,12 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(Screens.Objetivo.route) {
             ObjetivoScreen(navController)
+        }
+        composable(Screens.Receta.route) {
+            RecetaScreen(navController)
+        }
+        composable(Screens.AgregarReceta.route) {
+            AgregarIngredienteScreen(navController)
         }
     }
 }
