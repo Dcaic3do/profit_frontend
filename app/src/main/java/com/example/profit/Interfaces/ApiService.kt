@@ -14,6 +14,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import android.os.Build
 
 interface ObjetivoInterface {
     // Objetivo
@@ -96,7 +97,33 @@ interface ObjetivoInterface {
 }
 
 object RetrofitClient {
-    private const val BASE_URL = "http://10.0.2.2:8080"
+    // private const val BASE_URL = "http://192.168.128.10:8080"
+    private val BASE_URL = run {
+        val fingerprint = android.os.Build.FINGERPRINT
+        val model = android.os.Build.MODEL
+        val manufacturer = android.os.Build.MANUFACTURER
+        val brand = android.os.Build.BRAND
+        val device = android.os.Build.DEVICE
+        val product = android.os.Build.PRODUCT
+
+        val isEmulator = (fingerprint.startsWith("generic")
+                || fingerprint.lowercase().contains("vbox")
+                || fingerprint.lowercase().contains("test-keys")
+                || model.contains("Emulator")
+                || model.contains("Android SDK built for x86")
+                || manufacturer.contains("Genymotion")
+                || (brand.startsWith("generic") && device.startsWith("generic"))
+                || product == "google_sdk")
+
+        if (isEmulator) {
+            "http://10.0.2.2:8080" // IP para emulador
+        } else {
+            "http://192.168.128.10:8080" // IP para celular
+        }
+    }
+
+
+
 
     val apiService: ObjetivoInterface by lazy {
         Retrofit.Builder()
