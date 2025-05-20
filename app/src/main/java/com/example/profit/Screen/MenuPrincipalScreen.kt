@@ -46,7 +46,7 @@ fun MenuPrincipalScreen(navController: NavHostController) {
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
         DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
         DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
-        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
+        //DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
         DrawerItem("Ingredientes de Recetas", Screens.RecetaIngrediente.route, Icons.Default.AllInclusive)
     )
 
