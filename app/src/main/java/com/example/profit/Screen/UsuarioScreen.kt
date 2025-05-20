@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AllInclusive
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Delete
@@ -107,7 +108,8 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
         DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
         DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
-        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add)
+        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
+        DrawerItem("Ingredientes de Recetas", Screens.RecetaIngrediente.route, Icons.Default.AllInclusive)
     )
 
     val usuariosFiltrados = usuarios?.filter {

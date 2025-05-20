@@ -10,6 +10,7 @@ import com.example.profit.Screen.IngredienteScreen
 import com.example.profit.Screen.MenuPrincipalScreen
 import com.example.profit.Screen.UsuarioScreen
 import com.example.profit.Screen.ObjetivoScreen
+import com.example.profit.Screen.RecetaIngredienteScreen
 import com.example.profit.Screen.RecetaScreen
 
 @Composable
@@ -35,6 +36,9 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(Screens.AgregarReceta.route) {
             AgregarIngredienteScreen(navController)
+        }
+        composable(Screens.RecetaIngrediente.route) {
+            RecetaIngredienteScreen(navController)
         }
     }
 }
