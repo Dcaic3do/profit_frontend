@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -26,6 +27,7 @@ import com.example.profit.ui.components.MenuLateral
 import com.example.profit.ui.navigation.Screens
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.draw.clip
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +57,7 @@ fun ObjetivoScreen(navController: NavHostController, viewModel: ObjetivoViewMode
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
         DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
         DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
-        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
+        // DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
         DrawerItem("Ingredientes de Recetas", Screens.RecetaIngrediente.route, Icons.Default.AllInclusive)
     )
 
@@ -119,14 +121,17 @@ fun ObjetivoScreen(navController: NavHostController, viewModel: ObjetivoViewMode
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                TextField(
+                // Campo de búsqueda redondeado
+                OutlinedTextField(
                     value = codigoBusqueda,
                     onValueChange = { codigoBusqueda = it },
-                    label = { Text("Buscar por código o nombre") },
-                    leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Buscar Icon") },
+                    label = { Text("Buscar objetivo") },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Buscar") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
+                        .clip(RoundedCornerShape(24.dp)),
+                    shape = RoundedCornerShape(24.dp)
                 )
 
                 if (objetivosFiltrados.isEmpty()) {

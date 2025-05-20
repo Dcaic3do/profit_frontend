@@ -2,7 +2,9 @@ package com.example.profit.Screen
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -79,7 +81,10 @@ import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -93,7 +98,9 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
     var showEditDialog by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     var selectedUsuario by remember { mutableStateOf<Usuario?>(null) }
-    var expandedItem by remember { mutableStateOf<Long?>(null) }
+
+    // Changed to use Set<Long> for consistency with ObjetivoScreen
+    val expandedItemIds = remember { mutableStateOf<Set<Long>>(emptySet()) }
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -115,7 +122,7 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
         DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
         DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
-        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
+        // DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
         DrawerItem("Ingredientes de Recetas", Screens.RecetaIngrediente.route, Icons.Default.AllInclusive)
     )
 
@@ -193,29 +200,59 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
                 } else {
                     LazyColumn(modifier = Modifier.fillMaxWidth()) {
                         items(usuariosFiltrados) { usuario ->
-                            val isExpanded = expandedItem == usuario.idUsuario
+                            val isExpanded = expandedItemIds.value.contains(usuario.idUsuario ?: 0)
+                            val rotationState = animateFloatAsState(
+                                targetValue = if (isExpanded) 180f else 0f
+                            )
 
                             Card(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp)
-                                    .clickable { expandedItem = if (isExpanded) null else usuario.idUsuario },
+                                    .clickable {
+                                        val newSet = expandedItemIds.value.toMutableSet()
+                                        if (isExpanded) {
+                                            newSet.remove(usuario.idUsuario ?: 0)
+                                        } else {
+                                            newSet.add(usuario.idUsuario ?: 0)
+                                        }
+                                        expandedItemIds.value = newSet
+                                    },
                                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                             ) {
                                 Column(modifier = Modifier.padding(16.dp)) {
-                                    // Información básica siempre visible
-                                    Text(
-                                        text = usuario.usuario,
-                                        style = MaterialTheme.typography.titleLarge
-                                    )
-                                    Text(
-                                        text = "Correo: ${usuario.correoElectronico}",
-                                        style = MaterialTheme.typography.bodyLarge
-                                    )
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Column {
+                                            Text(
+                                                text = usuario.usuario,
+                                                style = MaterialTheme.typography.titleLarge
+                                            )
+                                            Text(
+                                                text = "Correo: ${usuario.correoElectronico}",
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+                                        Icon(
+                                            imageVector = Icons.Default.ArrowDropDown,
+                                            contentDescription = "Expandir",
+                                            modifier = Modifier.rotate(rotationState.value)
+                                        )
+                                    }
 
                                     // Información detallada y botones (visibles al expandir)
                                     AnimatedVisibility(visible = isExpanded) {
-                                        Column {
+                                        Column(modifier = Modifier.padding(top = 8.dp)) {
+                                            Divider(modifier = Modifier.padding(vertical = 8.dp))
+
+                                            Text(
+                                                text = "Detalles del usuario",
+                                                style = MaterialTheme.typography.titleSmall
+                                            )
+
                                             Spacer(modifier = Modifier.height(8.dp))
 
                                             val objetivo = objetivos.find { it.idObjetivo == usuario.objetivo }
@@ -223,22 +260,27 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
                                             Text("Objetivo: ${objetivo?.objetivo ?: "No asignado"}")
                                             Text("Calorías diarias: ${usuario.caloriaDiarias}")
 
-                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Spacer(modifier = Modifier.height(16.dp))
 
                                             // Botones de acción
-                                            Row {
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalArrangement = Arrangement.SpaceBetween
+                                            ) {
                                                 Button(
                                                     onClick = {
                                                         selectedUsuario = usuario
                                                         showEditDialog = true
                                                     },
-                                                    modifier = Modifier.padding(end = 8.dp)
+                                                    colors = ButtonDefaults.buttonColors(
+                                                        containerColor = MaterialTheme.colorScheme.primary
+                                                    )
                                                 ) {
                                                     Icon(
                                                         Icons.Default.Edit,
                                                         contentDescription = "Editar"
                                                     )
-                                                    Spacer(modifier = Modifier.width(4.dp))
+                                                    Spacer(modifier = Modifier.width(8.dp))
                                                     Text("Editar")
                                                 }
 
@@ -246,13 +288,16 @@ fun UsuarioScreen(navController: NavHostController, viewModel: UsuarioViewModel 
                                                     onClick = {
                                                         selectedUsuario = usuario
                                                         showDeleteDialog = true
-                                                    }
+                                                    },
+                                                    colors = ButtonDefaults.buttonColors(
+                                                        containerColor = MaterialTheme.colorScheme.error
+                                                    )
                                                 ) {
                                                     Icon(
                                                         Icons.Default.Delete,
                                                         contentDescription = "Eliminar"
                                                     )
-                                                    Spacer(modifier = Modifier.width(4.dp))
+                                                    Spacer(modifier = Modifier.width(8.dp))
                                                     Text("Eliminar")
                                                 }
                                             }

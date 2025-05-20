@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AllInclusive
@@ -106,7 +108,7 @@ fun RecetaIngredienteScreen(navController: NavHostController, viewModel: RecetaI
         DrawerItem("Ingredientes", Screens.Ingrediente.route, Icons.Default.Restaurant),
         DrawerItem("Categorías", Screens.Categoria.route, Icons.Default.Category),
         DrawerItem("Recetas", Screens.Receta.route, Icons.Default.RestaurantMenu),
-        DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
+        //DrawerItem("Agregar Recetas", Screens.AgregarReceta.route, Icons.Default.Add),
         DrawerItem("Ingredientes de Recetas", Screens.RecetaIngrediente.route, Icons.Default.AllInclusive)
     )
 
