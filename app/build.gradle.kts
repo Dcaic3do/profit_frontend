@@ -95,6 +95,7 @@ dependencies {
     // Room (base de datos local)
     implementation("androidx.room:room-runtime:2.5.0")
     implementation(libs.firebase.appdistribution.gradle)
+    implementation(libs.androidx.navigation.runtime.android)
     kapt("androidx.room:room-compiler:2.5.0") // ⚠ Cambiado de annotationProcessor a kapt
     implementation("androidx.room:room-ktx:2.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
