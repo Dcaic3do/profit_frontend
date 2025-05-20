@@ -130,7 +130,7 @@ fun RecetaIngredienteScreen(navController: NavHostController, viewModel: RecetaI
         Scaffold(
             topBar = {
                 BarraSuperior(
-                    title = "Objetivos",
+                    title = "Ingredientes de recetas",
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch { drawerState.open() }
